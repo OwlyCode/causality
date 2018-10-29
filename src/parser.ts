@@ -1,8 +1,8 @@
-import { World } from './core';
+import World from './core/world';
 
 export function parseExpression(expr: string, world: World): any {
     const trimed = expr.trim();
-    const random = world.getRandom();
+    const random = world.random;
 
     if (trimed.indexOf('[') === 0) {
         const start = trimed.indexOf('[') + 1;
