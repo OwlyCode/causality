@@ -7,11 +7,11 @@ export default class DebugEntry {
         this.content = content;
     }
 
-    getId(): string {
+    public getId(): string {
         return this.id;
     }
 
-    getContent(): string {
+    public getContent(): string {
         return this.content;
     }
 }

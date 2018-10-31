@@ -1,54 +1,80 @@
-import * as React from 'react';
-import ReactDOM from 'react-dom';
+import * as React from "react";
+import ReactDOM from "react-dom";
 
-import Fact from '../core/fact';
-import DebugEntry from '../core/debug-entry';
-import { formatYear } from '../date';
+import DebugEntry from "../core/DebugEntry";
+import Fact from "../core/Fact";
+import DebugLog from "./DebugLog";
+import Entry from "./Entry";
 
-import DebugLog from './DebugLog';
-import Entry from './Entry';
+function formatYear(year: number): string {
+    let suffix = "";
+    const absoluteYear = Math.abs(year);
+
+    if (year < 0) {
+        suffix = " ago";
+    }
+
+    if (absoluteYear >= 1000000000) {
+        return `${Math.round(absoluteYear / 10000000) / 100} billions years ${suffix}`;
+    }
+
+    if (absoluteYear >= 1000000) {
+        return `${Math.round(absoluteYear / 10000) / 100} millions years ${suffix}`;
+    }
+
+    if (absoluteYear >= 1000) {
+        return `${Math.round(absoluteYear / 10) / 100} thousands years ${suffix}`;
+    }
+
+    if (year === 0) {
+        return 'now';
+    }
+
+    return `${absoluteYear} years ${suffix}`;
+}
 
 export default class App extends React.Component <any, any> {
-    constructor (props: any) {
+    constructor(props: any) {
         super(props);
 
         this.state = {
-            world: props.world,
             concluded: false,
+            world: props.world,
         };
     }
-    componentWillMount() {
+
+    public componentWillMount() {
         document.addEventListener("keydown", this.onClick.bind(this));
     }
 
-    onClick() {
+    public onClick() {
         const world = this.props.generator.generate(this.state.world);
 
         if (world.final) {
             this.setState({
-                world,
                 concluded: true,
+                world,
             });
         } else {
             this.setState({ world });
         }
 
         setTimeout(() => {
-            window.scrollTo(0,document.body.scrollHeight);
+            window.scrollTo(0, document.body.scrollHeight);
         }, 10);
     }
 
-    restart() {
+    public restart() {
         window.location.reload(false);
     }
 
-    getTimeline() {
+    public getTimeline() {
         const timeline = this.state.world.timeline;
 
         return this.props.debug ? timeline : timeline.filter((item: DebugEntry | Fact) => item instanceof Fact);
     }
 
-    render() {
+    public render() {
         return <div>
             {this.getTimeline().map((item: DebugEntry | Fact) => {
                 if (item instanceof DebugEntry) {

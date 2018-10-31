@@ -9,15 +9,15 @@ export default class Fact {
         this.year = year;
     }
 
-    getId(): string {
+    public getId(): string {
         return this.id;
     }
 
-    getContent(): string {
+    public getContent(): string {
         return this.content;
     }
 
-    getYear(): number {
+    public getYear(): number {
         return this.year;
     }
 }
