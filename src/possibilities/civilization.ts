@@ -61,7 +61,7 @@ class WarStarts extends Possibility {
     }
 
     public isPossible(world: World): boolean {
-        return world.getFeatures(["civilization"]).length > 2;
+        return world.getFeatures(["civilization"]).length >= 2;
     }
 
     public alterWorld(world: World, values: {[key: string]: any}): World {
@@ -94,7 +94,9 @@ class MedievalProgression extends Possibility {
     };
 
     public isPossible(world: World): boolean {
-        return world.state.tech_level === "ancient_times";
+        const hasOneCiv = world.getFeatures(["civilization"]).length > 0;
+
+        return hasOneCiv && (world.state.tech_level === "ancient_times");
     }
 
     public alterWorld(world: World, values: {[key: string]: any}): World {
@@ -244,8 +246,9 @@ class Religion extends Possibility {
     public isPossible(world: World): boolean {
         const hasNotTooMuch = world.getFeatures(["religion"]).length < 3;
         const isNotAgnostic = world.getFeatures(["sentient", "agnostic"]).length === 0;
+        const hasOneCiv = world.getFeatures(["civilization"]).length > 0;
 
-        return hasNotTooMuch && isNotAgnostic;
+        return hasNotTooMuch && isNotAgnostic && hasOneCiv;
     }
 
     public alterWorld(world: World, values: {[key: string]: any}): World {

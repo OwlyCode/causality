@@ -12,9 +12,13 @@ import evolutionPossibilities from "./possibilities/evolution";
 import warPossibilities from "./possibilities/war";
 
 const r = new Random();
-let world = new World({ seed: r.generateSeed() });
+const url = new URL(window.location.href);
+const seed = url.searchParams.get("seed") || r.generateSeed();
+
+let world = new World({ seed });
 
 world = world
+    .addDebugEntry(`World seed is ${seed}`)
     .enterNarrative("the_creation")
     .addPossibilities(creationPossibilities)
     .addPossibilities(evolutionPossibilities)

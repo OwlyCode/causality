@@ -14,7 +14,7 @@ class Battle extends Possibility {
     public readonly score = "10";
 
     public isPossible(world: World): boolean {
-        return world.state.war_battles < 3;
+        return (world.state.war_battles < 3) || world.state.war_balance === 0;
     }
 
     public alterWorld(world: World, values: {[key: string]: any}): World {
@@ -80,10 +80,6 @@ class WarEnds extends Possibility {
 
     public computeScore(world: World): number {
         return Math.abs(world.state.war_balance) * 5;
-    }
-
-    public isPossible(world: World): boolean {
-        return (world.getFeatures(["civilization"]).length > 2);
     }
 
     public alterWorld(world: World, values: {[key: string]: any}): World {

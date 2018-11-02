@@ -55,25 +55,31 @@ export default class Generator {
         let weight = 0;
 
         for (const possibility of newWorld.availablePossibilities) {
-            weight += possibility.score !== null
+            const score = possibility.score !== null
                 ? parseExpression(possibility.score, newWorld)
                 : possibility.computeScore(newWorld);
-            weightTable.push({ possibility, weight });
+            weight += score;
+            weightTable.push({ possibility, score, weight });
         }
 
         const randomWeight = newWorld.random.between(0, weight);
         let winningPossibility = null;
 
         for (const item of weightTable) {
-            if (randomWeight < item.weight) {
+            newWorld = newWorld.addDebugEntry(`Probability of ${item.possibility.name} : ${Math.round(10000 * item.score / weight) / 100}%`);
+
+            if ((randomWeight <= item.weight) && !winningPossibility) {
                 winningPossibility = item.possibility;
-                break;
             }
         }
 
         if (!winningPossibility) {
+            newWorld = newWorld.addDebugEntry(`No possibility was selected.`);
+
             return newWorld;
         }
+
+        newWorld = newWorld.addDebugEntry(`${winningPossibility.name} was selected.`);
 
         const innerDescription: {[key: string]: string} = winningPossibility.randomPattern;
         const values: {[key: string]: any} = {};

@@ -38,7 +38,9 @@ export default class World {
             return [];
         }
 
-        let possibilities = Object.values(this.possibilities).map((n) => new n());
+        let possibilities = Object.keys(this.possibilities).map((key) => {
+            return new this.possibilities[key](key);
+        });
 
         if (this.narrative) {
             possibilities = possibilities.filter((possibility) => possibility.narrative === this.narrative);

@@ -10,7 +10,6 @@ Non-core features
 	- facts about the politics/economics
 
 DX
-- Add the list of probability for each next event in debug mode
 - Improve the way to have multiple text
 - Add a long-term memory version of 'pick', it will pick a value ONCE in the whole story.
 	-> Maybe add a world.setPool('poolName', [values]) and world.getPoolSize() for scoring on it.

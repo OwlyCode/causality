@@ -48,6 +48,10 @@ export default class App extends React.Component <any, any> {
     }
 
     public onClick() {
+        if (this.state.concluded) {
+            return;
+        }
+
         const world = this.props.generator.generate(this.state.world);
 
         if (world.final) {
