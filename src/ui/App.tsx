@@ -1,10 +1,16 @@
 import * as React from "react";
 import ReactDOM from "react-dom";
+import posed, { PoseGroup } from "react-pose";
 
 import DebugEntry from "../core/DebugEntry";
 import Fact from "../core/Fact";
 import DebugLog from "./DebugLog";
 import Entry from "./Entry";
+
+const Box = posed.div({
+  enter: { opacity: 1, transition: { duration: 300 } },
+  exit: { opacity: 0, transition: { duration: 300 } },
+});
 
 function formatYear(year: number): string {
     let suffix = "";
@@ -27,7 +33,7 @@ function formatYear(year: number): string {
     }
 
     if (year === 0) {
-        return 'now';
+        return "now";
     }
 
     return `${absoluteYear} years ${suffix}`;
@@ -80,13 +86,19 @@ export default class App extends React.Component <any, any> {
 
     public render() {
         return <div>
+            <PoseGroup>
             {this.getTimeline().map((item: DebugEntry | Fact) => {
                 if (item instanceof DebugEntry) {
-                    return <DebugLog key={item.getId()} content={item.getContent()}/>;
+                    return <Box key={item.getId()}>
+                        <DebugLog key={item.getId()} content={item.getContent()}/>
+                    </Box>;
                 } else {
-                    return <Entry key={item.getId()} timeLabel={formatYear(item.getYear() - this.state.world.age)} content={item.getContent()}/>;
+                    return <Box key={item.getId()}>
+                        <Entry key={item.getId()} timeLabel={formatYear(item.getYear() - this.state.world.age)} content={item.getContent()}/>
+                    </Box>;
                 }
             })}
+            </PoseGroup>
             { this.state.concluded ? <p><span className="end">Nothing more to see !</span> <a href="#" onClick={this.restart}>(click here to restart)</a></p> : '' }
             { !this.state.concluded ? <a href="#" onClick={this.onClick.bind(this)}>Click here or press space to continue</a> : '' }
         </div>;

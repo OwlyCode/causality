@@ -27,6 +27,7 @@
     "lodash": "^4.17.11",
     "react": "^16.6.0",
     "react-dom": "^16.6.0",
+    "react-pose": "^3.4.0",
     "seedrandom": "^2.4.4",
     "ts-loader": "^5.2.2"
   }
