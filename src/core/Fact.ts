@@ -1,23 +1,15 @@
-export default class Fact {
-    private content: string;
-    private year: number;
-    private id: string;
+import World from "./World";
 
-    constructor(id: string, content: string, year: number) {
+export default class Fact {
+    public readonly id: string;
+    public readonly content: string;
+    public readonly year: number;
+    public readonly world: World;
+
+    constructor(id: string, content: string, year: number, world: World) {
         this.id = id;
         this.content = content;
         this.year = year;
-    }
-
-    public getId(): string {
-        return this.id;
-    }
-
-    public getContent(): string {
-        return this.content;
-    }
-
-    public getYear(): number {
-        return this.year;
+        this.world = world;
     }
 }

@@ -26,6 +26,6 @@ world = world
     .addPossibilities(warPossibilities);
 
 const generator = new Generator();
-const app = <App debug={false} world={world} generator={generator}/>;
+const app = <App debug={false} seed={seed} world={world} generator={generator}/>;
 
 ReactDOM.render(app, document.getElementById("root"));

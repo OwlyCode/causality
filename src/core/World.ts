@@ -1,7 +1,6 @@
 import DebugEntry from "./DebugEntry";
 import Fact from "./Fact";
 import Possibility from "./Possibility";
-import Random from "./Random";
 
 export default class World {
     public readonly seed: string;
@@ -10,9 +9,12 @@ export default class World {
     public readonly narrative: string | null;
     public readonly features: string[][];
     public readonly age: number;
-    public readonly random: Random;
     public readonly possibilities: {[key: string]: typeof Possibility};
     public readonly final: boolean;
+    public readonly lastPossibility: Possibility;
+    public readonly lastWorld: World;
+    public readonly lastValues: {[key: string]: any};
+    public readonly manuallyAltered: boolean;
 
     constructor(source: any) {
         this.timeline = source.timeline || [];
@@ -23,8 +25,25 @@ export default class World {
         this.age = source.age || 0;
         this.final = source.final || false;
         this.seed = source.seed || "";
+        this.lastPossibility = source.lastPossibility || null;
+        this.lastValues = source.lastValues || {};
+        this.lastWorld = source.lastWorld || {};
+        this.manuallyAltered = source.manuallyAltered || false;
+    }
 
-        this.random = new Random(this.seed);
+    public reboot(seed: string): World {
+        return this.mutate({
+            age: 0,
+            features: [],
+            final: false,
+            lastPossibility: null,
+            lastValues: {},
+            manuallyAltered: false,
+            narrative: "the_creation",
+            seed,
+            state: {},
+            timeline: [],
+        });
     }
 
     public addPossibilities(possibilities: {[key: string]: typeof Possibility}): World {
@@ -56,14 +75,14 @@ export default class World {
     public addFact(ellapsedYears: number, content: string): World {
         const age = this.age + ellapsedYears;
         const timeline: Array<Fact|DebugEntry> = this.timeline.slice(0);
-        timeline.push(new Fact(this.random.generateSeed(), content, this.age));
+        timeline.push(new Fact(String(this.timeline.length), content, this.age, this));
 
         return this.mutate({ age, timeline });
     }
 
     public addDebugEntry(content: string): World {
         const timeline: Array<Fact|DebugEntry> = this.timeline.slice(0);
-        timeline.push(new DebugEntry(this.random.generateSeed(), content));
+        timeline.push(new DebugEntry(String(this.timeline.length), content));
 
         return this.mutate({ timeline });
     }
@@ -131,14 +150,34 @@ export default class World {
         return this.mutate({ final: true });
     }
 
+    public manuallyAlter(manuallyAltered: boolean = true): World {
+        return this.mutate({ manuallyAltered });
+    }
+
+    public setLastPossibility(lastPossibility: Possibility): World {
+        return this.mutate({ lastPossibility });
+    }
+
+    public setLastValues(lastValues: {[key: string]: any}): World {
+        return this.mutate({ lastValues });
+    }
+
+    public setLastWorld(lastWorld: {[key: string]: any}): World {
+        return this.mutate({ lastWorld });
+    }
+
     public getSource(): any {
         return {
             age: this.age,
             features: this.features,
             final: this.final,
+            lastPossibility: this.lastPossibility,
+            lastValues: this.lastValues,
+            lastWorld: this.lastWorld,
+            manuallyAltered: this.manuallyAltered,
             narrative: this.narrative,
             possibilities: this.possibilities,
-            seed: this.random.generateSeed(),
+            seed: this.seed,
             state: this.state,
             timeline: this.timeline,
         };

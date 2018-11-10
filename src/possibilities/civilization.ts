@@ -87,7 +87,7 @@ class MedievalProgression extends Possibility {
     public readonly randomPattern = {
         dominantCivilization: "pick_feature(1): civilization",
         ellapsedTime: "[1000 to 2000]",
-        mount: "pick_feature(1): lifeform, walking, medium sized",
+        mount: "They use as mount | nullable => pick_feature(1): lifeform, walking, medium sized",
         rangedWeapon: "pick(1): crossbows, bows, slings",
         weapon: "pick(1): swords, pikes, axes",
         world: "pick(1): flat, round, a dream, nearing its end, an illusion",
@@ -101,7 +101,7 @@ class MedievalProgression extends Possibility {
 
     public alterWorld(world: World, values: {[key: string]: any}): World {
         let mount = "";
-        if (values.mount) {
+        if (values.mount && values.mount.length) {
             const mountName = extractFeatureProperty(values.mount, "name");
             mount = `The <b>${mountName}</b> is used as a mount.`;
         } else {
@@ -241,6 +241,7 @@ class Religion extends Possibility {
         ellapsedTime: "[50 to 100]",
         prayerTime: "pick(1): at noon, at dusk, in the morning, at night",
         totem: "pick_feature(1): lifeform",
+        text: "[0 to 3]"
     };
 
     public isPossible(world: World): boolean {
@@ -275,7 +276,7 @@ class Religion extends Possibility {
         ];
 
         return world
-            .addFact(values.ellapsedTime, world.random.among(text))
+            .addFact(values.ellapsedTime, text[values.text])
             .addFeature(["religion"]);
     }
 }

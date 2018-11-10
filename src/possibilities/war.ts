@@ -97,11 +97,9 @@ class WarEnds extends Possibility {
         switch (values.outcome) {
             case "annexation":
                 outcome = `The <b>${winnerName}</b> annexated the <b>${looserName}</b>.`;
-                newWorld = newWorld.removeFeature([`name:${looserName}`]);
                 break;
             case "extermination":
                 outcome = `The <b>${winnerName}</b> exterminated the <b>${looserName}</b>.`;
-                newWorld = newWorld.removeFeature([`name:${looserName}`]);
                 break;
             case "submission":
                 outcome = `The <b>${winnerName}</b> made a puppet state of the <b>${looserName}</b>.`;
@@ -111,10 +109,16 @@ class WarEnds extends Possibility {
                 break;
         }
 
-        return newWorld
+        newWorld = newWorld
             .leaveNarrative()
             .enterNarrative("civilization")
             .addFact(0, `The war ends. ${outcome}`);
+
+        if (["annexation", "extermination"].includes(values.outcome)) {
+            newWorld = newWorld.removeFeature([`name:${looserName}`]);
+        }
+
+        return newWorld;
     }
 }
 
