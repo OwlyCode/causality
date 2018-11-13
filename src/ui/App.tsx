@@ -132,6 +132,7 @@ export default class App extends React.Component <any, any> {
 
         const nextSeedGen = new Random(btoa(newWorld.seed + JSON.stringify(this.state.formValues)));
 
+        newWorld = newWorld.lastWorld;
         newWorld = newWorld.mutate({ final: false });
         newWorld = newWorld.setLastPossibility(possibility);
         newWorld = newWorld.setLastWorld(newWorld);
