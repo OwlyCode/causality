@@ -3,6 +3,7 @@ import Select from "react-select";
 
 import Parser from "../core/Parser";
 import Random from "../core/Random";
+import { extractFeatureProperty } from "../core/Utils";
 import World from "../core/World";
 
 function expandValues(value: any): any {
@@ -11,6 +12,14 @@ function expandValues(value: any): any {
     }
 
     return { label: (value || "none"), value };
+}
+
+function expandFeature(value: any, isMulti: boolean): any {
+    if (isMulti) {
+        return (value || []).map((v: any) => ({ label: extractFeatureProperty(v, "name"), value: v }));
+    }
+
+    return { label: (value ? extractFeatureProperty(value, "name") : "none"), value };
 }
 
 function flattenValues(value: any): any {
@@ -75,7 +84,7 @@ export default class FormGenerator {
             const argsValue = Parser.parsePickArgs(expr.substring(argsStart, argsEnd));
             const selector = expr.substring(argsEnd + 2).split(",").map((s) => s.trim());
             const features = world.getFeatures(selector);
-            const possibleValues: any = features.map((value: string[]) => ({ value, label: value.join(" ") }));
+            const possibleValues: any = features.map((value: string[]) => ({ value, label: extractFeatureProperty(value, "name") }));
 
             if (options.includes("nullable")) {
                 possibleValues.push({ label: "none", value: null });
@@ -84,7 +93,7 @@ export default class FormGenerator {
             return <div key={name}>
                 <label>{label} ({typeof argsValue === "object" ? `${argsValue.min} to ${argsValue.max}` : argsValue})</label>
                 <Select
-                    defaultValue={expandValues(defaultValue)}
+                    defaultValue={expandFeature(defaultValue, argsValue !== 1)}
                     className="select"
                     isSearchable={false}
                     onChange={(value) => selectValue(name, flattenValues(value))}

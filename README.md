@@ -1,6 +1,3 @@
-Core features
-- Time travel : improve label for feature select
-
 Non-core features
 - Rework the battle system
 - Improve name generator
@@ -14,3 +11,6 @@ DX
     -> Maybe add a world.setPool('poolName', [values]) and world.getPoolSize() for scoring on it.
     -> Could be "pick_pool(2): poolName" in the rules
 - Refactor the time-travel code
+
+Bugs
+- Impossible to start a war (button apply never shows)
