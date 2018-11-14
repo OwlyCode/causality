@@ -22,7 +22,8 @@ export default class Generator {
         let winningPossibility = null;
 
         for (const item of weightTable) {
-            newWorld = newWorld.addDebugEntry(`Probability of ${item.possibility.name} : ${Math.round(10000 * item.score / weight) / 100}%`);
+            const score = Math.round(10000 * item.score / weight) / 100;
+            newWorld = newWorld.addDebugEntry(`Probability of ${item.possibility.name} : ${score}%`);
 
             if ((randomWeight <= item.weight) && !winningPossibility) {
                 winningPossibility = item.possibility;
@@ -40,7 +41,7 @@ export default class Generator {
         const innerDescription: {[key: string]: string} = winningPossibility.randomPattern;
         const values: {[key: string]: any} = {};
 
-        for (const varName in innerDescription) {
+        for (const varName of Object.keys(innerDescription)) {
             values[varName] = Parser.parseExpression(innerDescription[varName], newWorld);
             newWorld = newWorld.addDebugEntry(`Set ${varName} to ${JSON.stringify(values[varName])}`);
         }

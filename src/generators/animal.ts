@@ -1,6 +1,12 @@
 import Random from "../core/Random";
 
-export function generateAnimalName(seed: string, size: string, skin: string, cycle: string, locomotion: string): string {
+export function generateAnimalName(
+    seed: string,
+    size: string,
+    skin: string,
+    cycle: string,
+    locomotion: string,
+): string {
     const r = new Random(seed);
 
     const names: { [key: string]: { [key: string]: string[] } } = {

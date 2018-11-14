@@ -240,8 +240,8 @@ class Religion extends Possibility {
         adopter: "pick_feature(1): civilization",
         ellapsedTime: "[50 to 100]",
         prayerTime: "pick(1): at noon, at dusk, in the morning, at night",
+        text: "[0 to 3]",
         totem: "pick_feature(1): lifeform",
-        text: "[0 to 3]"
     };
 
     public isPossible(world: World): boolean {

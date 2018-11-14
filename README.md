@@ -1,3 +1,6 @@
+Core features
+- Time travel : improve label for feature select
+
 Non-core features
 - Rework the battle system
 - Improve name generator
