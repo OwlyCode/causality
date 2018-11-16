@@ -6,7 +6,6 @@ import { generateAnimalName } from "../generators/animal";
 
 class NewLifeform extends Possibility {
     public readonly narrative = "evolution";
-    public readonly canOccurOnce = false;
     public readonly score = "10";
     public readonly randomPattern = {
         ellapsedTime: "[100 to 1000]",

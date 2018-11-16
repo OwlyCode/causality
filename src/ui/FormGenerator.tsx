@@ -5,46 +5,7 @@ import Feature from "../core/Feature";
 import Parser from "../core/Parser";
 import Random from "../core/Random";
 import World from "../core/World";
-
-function expandValues(value: any, isMulti: boolean): any {
-    if (isMulti && !value) {
-        return [];
-    }
-
-    if (Array.isArray(value)) {
-        return value.map((v) => ({ label: v, value: v }));
-    }
-
-    return { label: (value || "none"), value };
-}
-
-function expandFeatures(value: any, isMulti: boolean): any {
-    if (isMulti && !value) {
-        return [];
-    }
-
-    if (Array.isArray(value)) {
-        return value.map((v: Feature) => ({ label: v.name, value: v }));
-    }
-
-    if (!value) {
-        return { label: "none", value: null };
-    }
-
-    return { label: (value.name || "none"), value };
-}
-
-function flattenValues(value: any): any {
-    if (value.value !== undefined) {
-        return value.value;
-    }
-
-    if (value.length === 1) {
-        return value[0].value;
-    }
-
-    return value.map((v: any) => v.value);
-}
+import { featureToSelect, pickToSelect, selectToValue } from "./FormUtils";
 
 export default class FormGenerator {
     public static expressionToForm(name: string, rootExpr: string, defaultValue: any, world: World, selectValue: any): any {
@@ -80,10 +41,10 @@ export default class FormGenerator {
             return <div key={name}>
                 <label>{label} ({typeof argsValue === "object" ? `${argsValue.min} to ${argsValue.max}` : argsValue})</label>
                 <Select
-                    defaultValue={expandValues(defaultValue, isMulti)}
+                    defaultValue={pickToSelect(defaultValue, isMulti)}
                     className="select"
                     isSearchable={false}
-                    onChange={(value) => selectValue(name, flattenValues(value))}
+                    onChange={(value) => selectValue(name, selectToValue(value))}
                     isMulti={isMulti}
                     key={name}
                     options={possibleValues} />
@@ -105,10 +66,10 @@ export default class FormGenerator {
             return <div key={name}>
                 <label>{label} ({typeof argsValue === "object" ? `${argsValue.min} to ${argsValue.max}` : argsValue})</label>
                 <Select
-                    defaultValue={expandFeatures(defaultValue, isMulti)}
+                    defaultValue={featureToSelect(defaultValue, isMulti)}
                     className="select"
                     isSearchable={false}
-                    onChange={(value) => selectValue(name, flattenValues(value))}
+                    onChange={(value) => selectValue(name, selectToValue(value))}
                     isMulti={isMulti}
                     key={name}
                     options={possibleValues} />
@@ -122,5 +83,4 @@ export default class FormGenerator {
 
         return <div key={name}></div>;
     }
-
 }

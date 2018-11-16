@@ -10,7 +10,6 @@ class Battle extends Possibility {
         defenderCasualties: "[10000 to 100000]",
         ellapsedTime: "1",
     };
-    public readonly canOccurOnce = false;
     public readonly score = "10";
 
     public isPossible(world: World): boolean {

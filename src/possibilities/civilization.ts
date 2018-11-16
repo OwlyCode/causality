@@ -7,7 +7,6 @@ import { generateCivilizationName } from "../generators/civilization";
 class NewCiv extends Possibility {
     public readonly narrative = "civilization";
     public readonly score = "10";
-    public readonly canOccurOnce = false;
     public readonly randomPattern = {
         biome: "pick(1): plains, desert, mountains, forests",
         ellapsedTime: "[50 to 100]",
@@ -35,7 +34,6 @@ class NewCiv extends Possibility {
 
 class WarStarts extends Possibility {
     public readonly narrative = "civilization";
-    public readonly canOccurOnce = false;
     public readonly randomPattern = {
         ellapsedTime: "[50 to 100]",
         participants: "pick_feature(2): civilization",
@@ -234,7 +232,6 @@ class DeepSpaceProgression extends Possibility {
 class Religion extends Possibility {
     public readonly narrative = "civilization";
     public readonly score = "10";
-    public readonly canOccurOnce = false;
     public readonly randomPattern = {
         adjective: "pick(1): Holy, Great, Sacred, Venerable",
         adopter: "pick_feature(1): civilization",
