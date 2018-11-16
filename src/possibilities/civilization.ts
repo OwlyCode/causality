@@ -1,7 +1,6 @@
 /* tslint:disable:max-classes-per-file */
 import Possibility from "../core/Possibility";
 import { an, ucfirst } from "../core/Utils";
-import { extractFeatureProperty } from "../core/Utils";
 import World from "../core/World";
 import { generateCivilizationName } from "../generators/civilization";
 
@@ -30,7 +29,7 @@ class NewCiv extends Possibility {
                 A new civilization, the <b>${name} ${values.government}</b> appeared. After a long travel,
                 they established their capital city in the ${values.biome}.
             `)
-            .addFeature(["civilization", `name:${name} ${values.government}`, values.government]);
+            .addFeature(`${name} ${values.government}`, ["civilization", values.government]);
     }
 }
 
@@ -65,8 +64,8 @@ class WarStarts extends Possibility {
     }
 
     public alterWorld(world: World, values: {[key: string]: any}): World {
-        const attackerName = extractFeatureProperty(values.participants[0], "name");
-        const defenderName = extractFeatureProperty(values.participants[1], "name");
+        const attackerName = values.participants[0].name;
+        const defenderName = values.participants[1].name;
 
         return world
             .setState("war_balance", 0)
@@ -101,14 +100,15 @@ class MedievalProgression extends Possibility {
 
     public alterWorld(world: World, values: {[key: string]: any}): World {
         let mount = "";
-        if (values.mount && values.mount.length) {
-            const mountName = extractFeatureProperty(values.mount, "name");
+
+        if (values.mount) {
+            const mountName = values.mount.name;
             mount = `The <b>${mountName}</b> is used as a mount.`;
         } else {
             mount = "They use wooden charriots as mount.";
         }
 
-        const dominantCivilization = extractFeatureProperty(values.dominantCivilization, "name");
+        const dominantCivilization = values.dominantCivilization.name;
 
         return world
             .setState("tech_level", "medieval")
@@ -137,7 +137,7 @@ class IndustrialProgression extends Possibility {
     }
 
     public alterWorld(world: World, values: {[key: string]: any}): World {
-        const dominantCivilization = extractFeatureProperty(values.dominantCivilization, "name");
+        const dominantCivilization = values.dominantCivilization.name;
 
         return world
             .setState("tech_level", "industrial")
@@ -164,7 +164,7 @@ class ModernProgression extends Possibility {
     }
 
     public alterWorld(world: World, values: {[key: string]: any}): World {
-        const dominantCivilization = extractFeatureProperty(values.dominantCivilization, "name");
+        const dominantCivilization = values.dominantCivilization.name;
 
         return world
             .setState("tech_level", "modern")
@@ -191,7 +191,7 @@ class FuturisticProgression extends Possibility {
     }
 
     public alterWorld(world: World, values: {[key: string]: any}): World {
-        const dominantCivilization = extractFeatureProperty(values.dominantCivilization, "name");
+        const dominantCivilization = values.dominantCivilization.name;
 
         return world
             .setState("tech_level", "futuristic")
@@ -219,7 +219,7 @@ class DeepSpaceProgression extends Possibility {
     }
 
     public alterWorld(world: World, values: {[key: string]: any}): World {
-        const dominantCivilization = extractFeatureProperty(values.dominantCivilization, "name");
+        const dominantCivilization = values.dominantCivilization.name;
 
         return world
             .setState("tech_level", "deep_space")
@@ -253,8 +253,8 @@ class Religion extends Possibility {
     }
 
     public alterWorld(world: World, values: {[key: string]: any}): World {
-        const totemName = extractFeatureProperty(values.totem, "name");
-        const adopterName = extractFeatureProperty(values.adopter, "name");
+        const totemName = values.totem.name;
+        const adopterName = values.adopter.name;
 
         const text = [
             `A new religion was founded around the cult of the <b>${totemName}</b>.
@@ -277,7 +277,7 @@ class Religion extends Possibility {
 
         return world
             .addFact(values.ellapsedTime, text[values.text])
-            .addFeature(["religion"]);
+            .addFeature("religion", ["religion"]);
     }
 }
 

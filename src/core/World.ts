@@ -1,5 +1,6 @@
 import DebugEntry from "./DebugEntry";
 import Fact from "./Fact";
+import Feature from "./Feature";
 import Possibility from "./Possibility";
 
 export default class World {
@@ -7,7 +8,7 @@ export default class World {
     public readonly timeline: Array<Fact|DebugEntry>;
     public readonly state: {[key: string]: any};
     public readonly narrative: string | null;
-    public readonly features: string[][];
+    public readonly features: Feature[];
     public readonly age: number;
     public readonly possibilities: {[key: string]: typeof Possibility};
     public readonly final: boolean;
@@ -96,19 +97,19 @@ export default class World {
         return this.mutate({ state });
     }
 
-    public addFeature(feature: string[]): World {
-        this.addDebugEntry(`Added feature ${JSON.stringify(feature)}`);
+    public addFeature(name: string, content: string[]): World {
+        this.addDebugEntry(`Added feature "${name}" : ${JSON.stringify(content)}`);
         const features = this.features.slice(0);
-        features.push(feature);
+        features.push(new Feature(name, content));
 
         return this.mutate({ features });
     }
 
-    public getFeatures(selector: string[]) {
+    public getFeatures(selector: string[]): Feature[] {
         const result = [];
 
         for (const feature of this.features) {
-            if (selector.every((item) => feature.includes(item))) {
+            if (selector.every((item) => feature.content.includes(item))) {
                 result.push(feature);
             }
         }
@@ -116,17 +117,25 @@ export default class World {
         return result;
     }
 
-    public removeFeature(selector: string[]): World {
+    public removeFeatureByName(name: string): World {
+        this.addDebugEntry(`Removed features named ${name}`);
+
+        const features = this.features.filter((feature) => feature.name !== name);
+
+        return this.mutate({ features });
+    }
+
+    public removeFeatureBySelector(selector: string[]): World {
         this.addDebugEntry(`Removed features matching ${JSON.stringify(selector)}`);
 
-        const features = this.features.filter((feature) => !selector.every((item) => feature.includes(item)));
+        const features = this.features.filter((feature) => !selector.every((item) => feature.content.includes(item)));
 
         return this.mutate({ features });
     }
 
     public hasFeature(selector: string[]) {
         for (const feature of this.features) {
-            if (selector.every((item) => feature.includes(item))) {
+            if (selector.every((item) => feature.content.includes(item))) {
                 return true;
             }
         }

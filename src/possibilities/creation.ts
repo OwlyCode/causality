@@ -77,7 +77,7 @@ class MassiveImpact extends Possibility {
                     A massive impact occured with a protoplanet, ejecting matter into outer space.
                     The ejected matter slowly aggregated to form ${an(values.moonsColors)} moon.
                 `)
-                .addFeature(["moon", "first", "only", values.moonsColors[0]]);
+                .addFeature("moon", ["moon", "first", "only", values.moonsColors[0]]);
         }
 
         const moons = [];
@@ -86,7 +86,7 @@ class MassiveImpact extends Possibility {
             const feature = ["moon", positions[i], values.moonsColors[i]];
 
             moons.push(`The ${positions[i]} moon is ${values.moonsColors[i]}.`);
-            newWorld = newWorld.addFeature(feature);
+            newWorld = newWorld.addFeature("moon", feature);
         }
 
         return newWorld.addFact(values.ellapsedTime, `
@@ -138,7 +138,7 @@ class Panspermia extends Possibility {
         return world
             .enterNarrative("evolution")
             .addFact(values.ellapsedTime * 1000000, "A comet with some bacteria crashed.")
-            .addFeature(["life", "comet"]);
+            .addFeature("life", ["life", "comet"]);
     }
 }
 
@@ -157,7 +157,7 @@ class AlienIntervention extends Possibility {
         return world
             .enterNarrative("evolution")
             .addFact(values.ellapsedTime * 1000000, "An alien ship deposited some bacteria.")
-            .addFeature(["life", "alien"]);
+            .addFeature("life", ["life", "alien"]);
     }
 }
 
@@ -176,7 +176,7 @@ class ChemicalInterraction extends Possibility {
         return world
             .enterNarrative("evolution")
             .addFact(values.ellapsedTime * 1000000, "Following some random chemical interractions, life appeared.")
-            .addFeature(["life", "chemical"]);
+            .addFeature("life", ["life", "chemical"]);
     }
 }
 

@@ -191,6 +191,7 @@ export default class App extends React.Component <any, any> {
             ));
         }
 
+
         return results.every((r) => !!r);
     }
 

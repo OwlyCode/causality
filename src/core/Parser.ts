@@ -1,6 +1,3 @@
-import * as React from "react";
-import Select from "react-select";
-
 import Random from "./Random";
 import World from "./World";
 
@@ -97,25 +94,39 @@ export default class Parser {
             const argsEnd = trimed.indexOf(")");
             const argsValue = Parser.parsePickArgs(trimed.substring(argsStart, argsEnd));
 
-            if (argsValue === 1) {
-                return !!value;
+            if (typeof argsValue === "number") { // exact amount
+                if (Array.isArray(value)) {
+                    return value.length === argsValue;
+                } else {
+                    return argsValue === 1 && !!value;
+                }
+            } else { // range
+                if (Array.isArray(value)) {
+                    return value.length >= argsValue.min && value.length <= argsValue.max;
+                } else {
+                     return 1 >= argsValue.min;
+                }
             }
 
-            if (typeof value === "string") {
-                return 1 >= argsValue.min;
-            }
-
-            return value && (value.length >= argsValue.min && value.length <= argsValue.max);
+            throw Error("Unhandled validation case");
         } else if (trimed.startsWith("pick_feature(")) {
             const argsStart = trimed.indexOf("(") + 1;
             const argsEnd = trimed.indexOf(")");
             const argsValue = Parser.parsePickArgs(trimed.substring(argsStart, argsEnd));
 
-            if (argsValue === 1) {
-                return !!value;
+            if (typeof argsValue === "number") { // exact amount
+                if (Array.isArray(value)) {
+                    return value.length === argsValue;
+                } else {
+                    return argsValue === 1 && !!value;
+                }
+            } else { // range
+                if (Array.isArray(value)) {
+                    return value.length >= argsValue.min && value.length <= argsValue.max;
+                } else {
+                     return 1 >= argsValue.min;
+                }
             }
-
-            return value && (value.length >= argsValue.min && value.length <= argsValue.max);
         }
 
         return true;

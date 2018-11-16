@@ -1,6 +1,5 @@
 /* tslint:disable:max-classes-per-file */
 import Possibility from "../core/Possibility";
-import { extractFeatureProperty } from "../core/Utils";
 import { an } from "../core/Utils";
 import World from "../core/World";
 import { generateAnimalName } from "../generators/animal";
@@ -30,8 +29,8 @@ class NewLifeform extends Possibility {
                 The <b>${name}</b>, ${an(values.size)} ${values.locomotion} lifeform appeared.
                 It is notable for its ${values.skin} enveloppe, with a mostly ${values.lifeCycle} activity.
             `)
-            .addFeature([
-                "lifeform", "tier1", `name:${name}`, values.locomotion,
+            .addFeature(name, [
+                "lifeform", "tier1", values.locomotion,
                 values.lifeCycle, values.skin, values.size, values.id,
             ]);
     }
@@ -62,7 +61,7 @@ class SentientLifeform extends Possibility {
                 which is their favorite habitat. They tend to view religion in ${an(values.faith)} way
                 and to solve conflits in ${an(values.aggressivity)} manner and are notable for their ${values.special}.
             `)
-            .addFeature(["sentient", values.faith, values.aggressivity, values.special])
+            .addFeature("sentient", ["sentient", values.faith, values.aggressivity, values.special])
             .enterNarrative("civilization")
             .setState("tech_level", "ancient_times");
     }
@@ -82,13 +81,13 @@ class AsteroidImpact extends Possibility {
 
     public alterWorld(world: World, values: {[key: string]: any}): World {
         const lifeforms = world.getFeatures(["lifeform"]);
-        const name = extractFeatureProperty(values.extinctLifeform, "name");
+        const name = values.extinctLifeform.name;
 
         return world
             .addFact(values.ellapsedTime * 1000, `
                 An asteroid crashed. Following huge changes in its ecosystem,
                 the <b>${name}</b> went extinct.`)
-            .removeFeature(values.extinctLifeform);
+            .removeFeatureByName(values.extinctLifeform.name);
     }
 }
 

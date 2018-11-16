@@ -1,13 +1,3 @@
-export function extractFeatureProperty(feature: string[], property: string) {
-    for (const item of feature) {
-        if (item.startsWith(`${property}:`)) {
-            return item.split(":")[1];
-        }
-    }
-
-    return null;
-}
-
 export function isConsonant(letter: string): boolean {
     return ["a", "e", "i", "o", "u"].includes(letter.toLowerCase());
 }

@@ -115,7 +115,7 @@ class WarEnds extends Possibility {
             .addFact(0, `The war ends. ${outcome}`);
 
         if (["annexation", "extermination"].includes(values.outcome)) {
-            newWorld = newWorld.removeFeature([`name:${looserName}`]);
+            newWorld = newWorld.removeFeatureByName(looserName);
         }
 
         return newWorld;
