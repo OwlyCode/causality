@@ -6,15 +6,23 @@ import Parser from "../core/Parser";
 import Random from "../core/Random";
 import World from "../core/World";
 
-function expandValues(value: any): any {
+function expandValues(value: any, isMulti: boolean): any {
+    if (isMulti && !value) {
+        return [];
+    }
+
     if (Array.isArray(value)) {
         return value.map((v) => ({ label: v, value: v }));
     }
 
-    return { label: (value || "none value"), value };
+    return { label: (value || "none"), value };
 }
 
-function expandFeatures(value: any): any {
+function expandFeatures(value: any, isMulti: boolean): any {
+    if (isMulti && !value) {
+        return [];
+    }
+
     if (Array.isArray(value)) {
         return value.map((v: Feature) => ({ label: v.name, value: v }));
     }
@@ -67,14 +75,16 @@ export default class FormGenerator {
                 possibleValues.push({ label: "none", value: null });
             }
 
+            const isMulti = argsValue !== 1;
+
             return <div key={name}>
                 <label>{label} ({typeof argsValue === "object" ? `${argsValue.min} to ${argsValue.max}` : argsValue})</label>
                 <Select
-                    defaultValue={expandValues(defaultValue)}
+                    defaultValue={expandValues(defaultValue, isMulti)}
                     className="select"
                     isSearchable={false}
                     onChange={(value) => selectValue(name, flattenValues(value))}
-                    isMulti={argsValue !== 1}
+                    isMulti={isMulti}
                     key={name}
                     options={possibleValues} />
             </div>;
@@ -90,14 +100,16 @@ export default class FormGenerator {
                 possibleValues.push({ label: "none", value: null });
             }
 
+            const isMulti = argsValue !== 1;
+
             return <div key={name}>
                 <label>{label} ({typeof argsValue === "object" ? `${argsValue.min} to ${argsValue.max}` : argsValue})</label>
                 <Select
-                    defaultValue={expandFeatures(defaultValue)}
+                    defaultValue={expandFeatures(defaultValue, isMulti)}
                     className="select"
                     isSearchable={false}
                     onChange={(value) => selectValue(name, flattenValues(value))}
-                    isMulti={argsValue !== 1}
+                    isMulti={isMulti}
                     key={name}
                     options={possibleValues} />
             </div>;
