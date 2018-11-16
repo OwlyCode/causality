@@ -130,9 +130,10 @@ export default class App extends React.Component <any, any> {
         let newWorld = this.state.editedWorld;
         const possibility = this.state.editedPossibility;
 
-        const nextSeedGen = new Random(btoa(newWorld.seed + JSON.stringify(this.state.formValues)));
-
         newWorld = newWorld.lastWorld;
+
+        const i = new Random(newWorld.seed);
+        const nextSeedGen = new Random(btoa(newWorld.seed + i.generateSeed()));
         newWorld = newWorld.mutate({ final: false });
         newWorld = newWorld.setLastPossibility(possibility);
         newWorld = newWorld.setLastWorld(newWorld);
@@ -140,6 +141,7 @@ export default class App extends React.Component <any, any> {
         newWorld = newWorld.manuallyAlter();
         newWorld = possibility.alterWorld(newWorld, this.state.formValues);
         newWorld = newWorld.manuallyAlter(false);
+        newWorld = newWorld.mutate({ seed: nextSeedGen.generateSeed() });
 
         this.setState({
             concluded: newWorld.final,

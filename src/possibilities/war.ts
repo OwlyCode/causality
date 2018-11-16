@@ -59,7 +59,7 @@ class NuclearEnd extends Possibility {
         const defenderName = world.state.war_defender;
 
         const targetName = balance > 0 ? attackerName : defenderName;
-        const nukerName = balance < 0 ? attackerName : defenderName;
+        const nukerName = defenderName === targetName ? attackerName : defenderName;
 
         return world
             .conclude()

@@ -12,5 +12,5 @@ DX
     -> Could be "pick_pool(2): poolName" in the rules
 - Refactor the time-travel code
 
-Bugs
-- Impossible to start a war (button apply never shows)
+Bug
+- "none" displayed in multi select (should be empty).

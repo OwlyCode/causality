@@ -50,7 +50,9 @@ export default class Generator {
         newWorld = newWorld.setLastPossibility(winningPossibility);
         newWorld = newWorld.setLastValues(values);
 
-        const nextSeedGen = new Random(btoa(newWorld.seed + JSON.stringify(values)));
+        const i = new Random(newWorld.seed);
+        const nextSeedGen = new Random(btoa(newWorld.seed + i.generateSeed()));
+
         newWorld = newWorld.mutate({
             seed: nextSeedGen.generateSeed(),
         });
