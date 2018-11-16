@@ -8,10 +8,10 @@ class NewCiv extends Possibility {
     public readonly narrative = "civilization";
     public readonly score = "10";
     public readonly randomPattern = {
-        biome: "pick(1): plains, desert, mountains, forests",
-        ellapsedTime: "[50 to 100]",
-        government: "pick(1): Empire, Republic, Kingdom, Dominion, Collective",
-        id: "seed()",
+        biome: "Biome of the founded capital => pick(1): plains, desert, mountains, forests",
+        ellapsedTime: "Ellapsed time in years => [50 to 100]",
+        government: "Government => pick(1): Empire, Republic, Kingdom, Dominion, Collective",
+        id: "Seed used for name generation => seed()",
     };
 
     public isPossible(world: World): boolean {
@@ -35,9 +35,9 @@ class NewCiv extends Possibility {
 class WarStarts extends Possibility {
     public readonly narrative = "civilization";
     public readonly randomPattern = {
-        ellapsedTime: "[50 to 100]",
-        participants: "pick_feature(2): civilization",
-        reason: "pick(1): trade dispute, border dispute, discovered conspiracy",
+        ellapsedTime: "Ellapsed time in years => [50 to 100]",
+        participants: "Civilizations at war, attacker in first position => pick_feature(2): civilization",
+        reason: "Justification of war => pick(1): trade dispute, border dispute, discovered conspiracy",
     };
 
     public computeScore(world: World): number {
@@ -82,12 +82,12 @@ class MedievalProgression extends Possibility {
     public readonly narrative = "civilization";
     public readonly score = "5";
     public readonly randomPattern = {
-        dominantCivilization: "pick_feature(1): civilization",
-        ellapsedTime: "[1000 to 2000]",
-        mount: "They use as mount | nullable => pick_feature(1): lifeform, walking, medium sized",
-        rangedWeapon: "pick(1): crossbows, bows, slings",
-        weapon: "pick(1): swords, pikes, axes",
-        world: "pick(1): flat, round, a dream, nearing its end, an illusion",
+        dominantCivilization: "Dominant civilization => pick_feature(1): civilization",
+        ellapsedTime: "Ellapsed time in years => [1000 to 2000]",
+        mount: "Mount used | nullable => pick_feature(1): lifeform, walking, medium sized",
+        rangedWeapon: "Main ranged weapon => pick(1): crossbows, bows, slings",
+        weapon: "Main melee weapon => pick(1): swords, pikes, axes",
+        world: "They think the world is => pick(1): flat, round, a dream, nearing its end, an illusion",
     };
 
     public isPossible(world: World): boolean {
@@ -124,10 +124,10 @@ class IndustrialProgression extends Possibility {
     public readonly narrative = "civilization";
     public readonly score = "5";
     public readonly randomPattern = {
-        breakthrough: "pick(1): general relativity, nuclear fission, electromagnetism theory",
-        dominantCivilization: "pick_feature(1): civilization",
-        ellapsedTime: "[200 to 800]",
-        production: "pick(1): coal, textile, canned food, luxury goods",
+        breakthrough: "Main scientific breakthrough => pick(1): general relativity, nuclear fission, electromagnetism theory",
+        dominantCivilization: "Dominant Civilization => pick_feature(1): civilization",
+        ellapsedTime: "Ellapsed time in years => [200 to 800]",
+        production: "Resource that is the most produced => pick(1): coal, textile, canned food, luxury goods",
     };
 
     public isPossible(world: World): boolean {
@@ -151,10 +151,10 @@ class ModernProgression extends Possibility {
     public readonly narrative = "civilization";
     public readonly score = "5";
     public readonly randomPattern = {
-        communications: "pick(1): mobile phones, public terminals, home computers",
-        dominantCivilization: "pick_feature(1): civilization",
-        ellapsedTime: "[100 to 200]",
-        problems: "pick(1): pollution, fake news, inequality, poverty, increasing disasters frequency",
+        communications: "Main communication device => pick(1): mobile phones, public terminals, home computers",
+        dominantCivilization: "Dominant Civilization => pick_feature(1): civilization",
+        ellapsedTime: "Ellapsed time in years => [100 to 200]",
+        problems: "World #1 issue => pick(1): pollution, fake news, inequality, poverty, increasing disasters frequency",
     };
 
     public isPossible(world: World): boolean {
@@ -178,10 +178,10 @@ class FuturisticProgression extends Possibility {
     public readonly narrative = "civilization";
     public readonly score = "5";
     public readonly randomPattern = {
-        dominantCivilization: "pick_feature(1): civilization",
-        ellapsedTime: "[100 to 200]",
-        powerSource: "pick(1): nuclear fusion plants, vast solar panel fields, huge hydroelectric dams",
-        transportation: "pick(1): teleporter, flying cars, personal planes, underground tubes",
+        dominantCivilization: "Dominant Civilization => pick_feature(1): civilization",
+        ellapsedTime: "Ellapsed time in years => [100 to 200]",
+        powerSource: "Main power source => pick(1): nuclear fusion plants, vast solar panel fields, huge hydroelectric dams",
+        transportation: "Most popular transportation system => pick(1): teleporter, flying cars, personal planes, underground tubes",
     };
 
     public isPossible(world: World): boolean {
@@ -207,9 +207,9 @@ class DeepSpaceProgression extends Possibility {
     public readonly narrative = "civilization";
     public readonly score = "5";
     public readonly randomPattern = {
-        dominantCivilization: "pick_feature(1): civilization",
-        ellapsedTime: "[100 to 200]",
-        wonder: "pick(1): space elevator, asteroid station, orbital shipyard, vast amount of high tech SSTO vehicles",
+        dominantCivilization: "Dominant civilization => pick_feature(1): civilization",
+        ellapsedTime: "Ellapsed time in years => [100 to 200]",
+        wonder: "Space wonder => pick(1): space elevator, asteroid station, orbital shipyard, vast amount of high tech SSTO vehicles",
     };
 
     public isPossible(world: World): boolean {
@@ -233,12 +233,12 @@ class Religion extends Possibility {
     public readonly narrative = "civilization";
     public readonly score = "10";
     public readonly randomPattern = {
-        adjective: "pick(1): Holy, Great, Sacred, Venerable",
-        adopter: "pick_feature(1): civilization",
-        ellapsedTime: "[50 to 100]",
-        prayerTime: "pick(1): at noon, at dusk, in the morning, at night",
-        text: "[0 to 3]",
-        totem: "pick_feature(1): lifeform",
+        adjective: "Adjective used to describe the god => pick(1): Holy, Great, Sacred, Venerable",
+        adopter: "Civilization founding the religion => pick_feature(1): civilization",
+        ellapsedTime: "Ellapsed time in years => [50 to 100]",
+        prayerTime: "Time at which prayers occur => pick(1): at noon, at dusk, in the morning, at night",
+        text: "Event text variant => [0 to 3]",
+        totem: "Lifeform that represents the god => pick_feature(1): lifeform",
     };
 
     public isPossible(world: World): boolean {
@@ -282,7 +282,7 @@ class SpaceEnd extends Possibility {
     public readonly narrative = "civilization";
     public readonly score = "1000";
     public readonly randomPattern = {
-        ellapsedTime: "[50 to 100]",
+        ellapsedTime: "Ellapsed time in years => [50 to 100]",
     };
 
     public isPossible(world: World): boolean {
@@ -304,7 +304,7 @@ class AlienHarvest extends Possibility {
     public readonly narrative = "civilization";
     public readonly score = "2";
     public readonly randomPattern = {
-        ellapsedTime: "[50 to 100]",
+        ellapsedTime: "Ellapsed time in years => [50 to 100]",
     };
 
     public isPossible(world: World): boolean {

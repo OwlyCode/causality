@@ -41,7 +41,7 @@ class PlanetBirth extends Possibility {
     public readonly score = "10";
     public readonly narrative = "the_creation";
     public readonly randomPattern = {
-        ellapsedTime: "[200 to 1000]",
+        ellapsedTime: "Ellapsed years in millions => [200 to 1000]",
     };
 
     public isPossible(world: World): boolean {
@@ -59,8 +59,8 @@ class MassiveImpact extends Possibility {
     public readonly score = "10";
     public readonly narrative = "the_creation";
     public readonly randomPattern = {
-        ellapsedTime: "[1 to 1000]",
-        moonsColors: "pick([1 to 3]): blue, red, green, white, dark gray, yellow, orange",
+        ellapsedTime: "Ellapsed years in millions => [1 to 1000]",
+        moonsColors: "Color of each moon => pick([1 to 3]): blue, red, green, white, dark gray, yellow, orange",
     };
 
     public isPossible(world: World): boolean {
@@ -101,10 +101,10 @@ class PlanetCreation extends Possibility {
     public readonly narrative = "the_creation";
     public readonly score = "10";
     public readonly randomPattern = {
-        atmosphereMainGaz: "pick(1): nitrogen, helium, carbon dioxyde",
-        atmosphereThickness: "pick(1): thick, thin",
-        ellapsedTime: "[1000 to 3000]",
-        waterCoverage: "[40 to 90]",
+        atmosphereMainGaz: "Main gaz of the atmosphere => pick(1): nitrogen, helium, carbon dioxyde",
+        atmosphereThickness: "Thickness of the atmosphere => pick(1): thick, thin",
+        ellapsedTime: "Ellapsed years in millions => [1000 to 3000]",
+        waterCoverage: "Water coverage of the surface => [40 to 90]",
     };
 
     public isPossible(world: World): boolean {
@@ -127,7 +127,7 @@ class Panspermia extends Possibility {
     public readonly narrative = "the_creation";
     public readonly score = "3";
     public readonly randomPattern = {
-        ellapsedTime: "[1000 to 2000]",
+        ellapsedTime: "Ellapsed years in millions => [1000 to 2000]",
     };
 
     public isPossible(world: World): boolean {
@@ -146,7 +146,7 @@ class AlienIntervention extends Possibility {
     public readonly narrative = "the_creation";
     public readonly score = "3";
     public readonly randomPattern = {
-        ellapsedTime: "[1000 to 2000]",
+        ellapsedTime: "Ellapsed years in millions => [1000 to 2000]",
     };
 
     public isPossible(world: World): boolean {
@@ -165,7 +165,7 @@ class ChemicalInterraction extends Possibility {
     public readonly narrative = "the_creation";
     public readonly score = "3";
     public readonly randomPattern = {
-        ellapsedTime: "[1000 to 2000]",
+        ellapsedTime: "Ellapsed years in millions => [1000 to 2000]",
     };
 
     public isPossible(world: World): boolean {

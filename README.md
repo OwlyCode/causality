@@ -1,4 +1,5 @@
 Non-core features
+- Allow manual names
 - Rework the battle system
 - Improve animal name generator
 - Add random facts

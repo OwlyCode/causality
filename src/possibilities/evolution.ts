@@ -8,12 +8,12 @@ class NewLifeform extends Possibility {
     public readonly narrative = "evolution";
     public readonly score = "10";
     public readonly randomPattern = {
-        ellapsedTime: "[100 to 1000]",
-        id: "seed()",
-        lifeCycle: "pick(1): diurnal, nocturnal",
-        locomotion: "pick(1): swimming, walking, flying",
-        size: "pick(1): tiny, small, medium sized, big, huge",
-        skin: "pick(1): feathery, hairy, scaly, bald",
+        ellapsedTime: "Ellapsed time in millions of years => [100 to 1000]",
+        id: "Seed used for name generation => seed()",
+        lifeCycle: "Period of activity of the lifeform => pick(1): diurnal, nocturnal",
+        locomotion: "Way of moving of the lifeform => pick(1): swimming, walking, flying",
+        size: "Size of the lifeform => pick(1): tiny, small, medium sized, big, huge",
+        skin: "Skin of the lifeform => pick(1): feathery, hairy, scaly, bald",
     };
 
     public isPossible(world: World): boolean {
@@ -39,13 +39,13 @@ class SentientLifeform extends Possibility {
     public readonly narrative = "evolution";
     public readonly score = "1";
     public readonly randomPattern = {
-        aggressivity: "pick(1): warmonger, aggressive, pacifist, inoffensive",
-        biome: "pick(1): desert, forest, plains",
-        ellapsedTime: "[500 to 1000]",
-        faith: "pick(1): zealous, devout, doubtful, agnostic",
-        size: "[15 to 25]",
-        special: "pick(1): strength, generosity, hardworking mindset, traditions",
-        type: "pick(1): mammal, insect, reptile",
+        aggressivity: "Natural aggressivity => pick(1): warmonger, aggressive, pacifist, inoffensive",
+        biome: "Favorite biome => pick(1): desert, forest, plains",
+        ellapsedTime: "Ellapsed time in thousands of years => [500 to 1000]",
+        faith: "Attitude toward religion => pick(1): zealous, devout, doubtful, agnostic",
+        size: "Size in decimeters => [15 to 25]",
+        special: "Notable attribute => pick(1): strength, generosity, hardworking mindset, traditions",
+        type: "Main archetype => pick(1): mammal, insect, reptile",
     };
 
     public isPossible(world: World): boolean {
@@ -70,8 +70,8 @@ class AsteroidImpact extends Possibility {
     public readonly narrative = "evolution";
     public readonly score = "2";
     public readonly randomPattern = {
-        ellapsedTime: "[0 to 1000]",
-        extinctLifeform: "pick_feature(1): lifeform",
+        ellapsedTime: "Ellapsed time in thousands of years => [0 to 1000]",
+        extinctLifeform: "Lifeform that goes extinct => pick_feature(1): lifeform",
     };
 
     public isPossible(world: World): boolean {

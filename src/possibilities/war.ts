@@ -5,10 +5,10 @@ import World from "../core/World";
 class Battle extends Possibility {
     public readonly narrative = "war";
     public readonly randomPattern = {
-        attackerCasualties: "[10000 to 100000]",
-        balanceChange: "[-2 to 2]",
-        defenderCasualties: "[10000 to 100000]",
-        ellapsedTime: "1",
+        attackerCasualties: "Casualties for the attacker => [10000 to 100000]",
+        balanceChange: "Balance change for the war (negative : defender wins, positive : attacker wins) =>[-2 to 2]",
+        defenderCasualties: "Casualties for the defender => [10000 to 100000]",
+        ellapsedTime: "Ellapsed time in years => 1",
     };
     public readonly score = "10";
 
@@ -44,7 +44,7 @@ class Battle extends Possibility {
 class NuclearEnd extends Possibility {
     public readonly narrative = "war";
     public readonly randomPattern = {
-        ellapsedTime: "1",
+        ellapsedTime: "Ellapsed time in years => 1",
     };
     public readonly score = "1";
 
@@ -73,8 +73,8 @@ class NuclearEnd extends Possibility {
 class WarEnds extends Possibility {
     public readonly narrative = "war";
     public readonly randomPattern = {
-        ellapsedTime: "1",
-        outcome: "pick(1): annexation, extermination, submission, humiliation",
+        ellapsedTime: "Ellapsed time in years => 1",
+        outcome: "Outcome for the looser => pick(1): annexation, extermination, submission, humiliation",
     };
 
     public computeScore(world: World): number {
